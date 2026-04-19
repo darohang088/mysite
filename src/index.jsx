@@ -343,7 +343,7 @@ const REVIEWS = [
 
 const STATS = [
   { target: 15, label: "Apps delivered" },
-  { target: 3, label: "Years experience" },
+  { target: 6, label: "Years experience" },
   { target: 10, label: "Happy clients" },
 ];
 
