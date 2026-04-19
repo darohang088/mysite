@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import myPhoto from "./assets/me.jpeg";
-import facebookImg from "./assets/fb.png";
+import facebookImg from "./assets/facebook.png";
 import igImg from "./assets/ig.jpeg";
 import linkedinImg from "./assets/linkedin.png";
 
@@ -53,7 +53,7 @@ const globalStyles = `
   .review-card { transition: all .25s; }
   .review-card:hover { border-color: #18C566 !important; box-shadow: 0 8px 24px rgba(24,197,102,.09); }
 
-  .exp-card { transition: all .25s; }
+  .exp-card { transition: all .25s; overflow: hidden; }
   .exp-card:hover { border-color: #18C566 !important; box-shadow: 0 8px 28px rgba(24,197,102,.1); transform: translateY(-2px); }
 
   .social-icon { transition: transform .2s, background .2s; }
@@ -89,6 +89,7 @@ const globalStyles = `
     .exp-grid { grid-template-columns: 1fr !important; }
   }
   @media (max-width: 640px) {
+    .exp-card { padding: 18px !important; }
     .portfolio-grid { grid-template-columns: 1fr !important; }
     .reviews-grid { grid-template-columns: 1fr !important; }
     .skills-inner-grid { grid-template-columns: 1fr !important; }
@@ -320,7 +321,7 @@ const EXPERIENCE = [
         period: "Feb 2024 – Jan 2026",
         duration: "2 years",
         points: [
-          "Led Android & Flutter app development for Prince Bank's mobile banking platform",
+          "Android & Flutter app development for Prince Bank's mobile banking platform",
           "Implemented CI/CD pipelines with multi-flavor builds (SIT/UAT/PRE/PRO)",
           "Delivered pixel-perfect UI using Jetpack Compose and Flutter",
           "Collaborated closely with PMs, designers, and QA to ship new features",
@@ -607,6 +608,8 @@ function ExperienceCard({ exp }) {
                     fontSize: ".92rem",
                     letterSpacing: "-.01em",
                     color: "#111",
+                    wordBreak: "break-word",
+                    flex: 1,
                   }}
                 >
                   {role.title}
@@ -894,6 +897,7 @@ export default function Portfolio() {
               top: d.t,
               left: d.l,
               opacity: d.o,
+              zIndex: 0,
             }}
           />
         ))}
@@ -908,6 +912,8 @@ export default function Portfolio() {
             maxWidth: 1100,
             margin: "0 auto",
             width: "100%",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           {/* Left */}
@@ -937,11 +943,27 @@ export default function Portfolio() {
                 lineHeight: 1.08,
                 letterSpacing: "-.03em",
                 marginBottom: 18,
+                color: "#111111",
               }}
             >
-              Hi, I'm <span style={{ color: G }}>Hang Daro</span>
+              Hi, I'm{" "}
+              <span
+                style={{
+                  color: G,
+                  display: "inline-block",
+                }}
+              >
+                Hang Daro
+              </span>
               <br />
-              Mobile <span style={{ color: G }}>Developer</span>
+              <span style={{ color: "#111111" }}>Mobile </span>
+              <span
+                style={{
+                  color: G,
+                }}
+              >
+                Developer
+              </span>
             </h1>
 
             <p
@@ -954,20 +976,18 @@ export default function Portfolio() {
                 fontWeight: 400,
               }}
             >
-              Android Development Engineer at{" "}
-              <strong style={{ color: "#111", fontWeight: 700 }}>
-                Prince Bank
-              </strong>{" "}
-              with{" "}
+              I build mobile apps that scale.
+              <br />
+              Android Developer with{" "}
               <strong style={{ color: "#111", fontWeight: 700 }}>
                 6+ years
               </strong>{" "}
-              building production mobile apps. Shipped apps used by{" "}
+              of experience, shipping products used by{" "}
               <strong style={{ color: "#111", fontWeight: 700 }}>
                 100k+ users
               </strong>
-              , led engineering teams, and specialize in Flutter, Kotlin, and
-              clean architecture.
+              , leading teams, and crafting clean, high-performance apps with
+              Flutter and Kotlin.
             </p>
 
             <div
@@ -1073,31 +1093,16 @@ export default function Portfolio() {
                   justifyContent: "center",
                 }}
               >
-                {
-                  <img
-                    src={myPhoto}
-                    alt="Hang Daro"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      borderRadius: 12,
-                    }}
-                  />
-                }
-                <svg
-                  width="80"
-                  height="80"
-                  viewBox="0 0 80 80"
-                  fill="none"
-                  style={{ opacity: 0.45 }}
-                >
-                  <circle cx="40" cy="28" r="18" fill={G} />
-                  <path
-                    d="M10 72c0-16.569 13.431-30 30-30s30 13.431 30 30"
-                    fill={G}
-                  />
-                </svg>
+                <img
+                  src={myPhoto}
+                  alt="Hang Daro"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: 12,
+                  }}
+                />
               </div>
 
               {/* Status chip */}
@@ -1161,14 +1166,14 @@ export default function Portfolio() {
               >
                 Follow me on:
               </span>
-              {/* <div style={{ width: 1, height: 40, background: BORDER }} /> */}
+              <div style={{ width: 1, height: 40, background: BORDER }} />
               {[
+                { img: facebookImg, href: "#", alt: "Facebook" },
                 {
                   img: linkedinImg,
                   href: "https://www.linkedin.com/in/hangdaro-9386b01b5",
                   alt: "LinkedIn",
                 },
-                { img: facebookImg, href: "#", alt: "Facebook" },
                 { img: igImg, href: "#", alt: "Instagram" },
               ].map(({ img, href, alt }, i) => (
                 <a
@@ -1176,18 +1181,18 @@ export default function Portfolio() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="footer-social"
+                  className="social-icon"
                   style={{
-                    width: 36,
-                    height: 36,
-                    // background: G,
-                    borderRadius: 8,
+                    width: 32,
+                    height: 32,
+                    background: G,
+                    borderRadius: 6,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     textDecoration: "none",
                     overflow: "hidden",
-                    padding: 6,
+                    padding: 5,
                   }}
                 >
                   <img
@@ -1197,7 +1202,7 @@ export default function Portfolio() {
                       width: "100%",
                       height: "100%",
                       objectFit: "contain",
-                      // filter: "brightness(0) invert(1)",
+                      filter: "brightness(0) invert(1)",
                     }}
                   />
                 </a>
@@ -1306,13 +1311,15 @@ export default function Portfolio() {
                 gap: 18,
                 flexWrap: "wrap",
                 marginTop: 16,
+                alignItems: "flex-start",
               }}
             >
               {EDUCATION.map((ed, i) => (
                 <div
                   key={i}
                   style={{
-                    flex: "1 1 220px",
+                    maxWidth: "100%",
+                    width: "100%",
                     background: "white",
                     border: `1.5px solid ${BORDER}`,
                     borderRadius: 16,
@@ -1321,6 +1328,7 @@ export default function Portfolio() {
                     alignItems: "flex-start",
                     gap: 14,
                     transition: "all .25s",
+                    alignSelf: "flex-start",
                   }}
                 >
                   <div
@@ -1450,7 +1458,12 @@ export default function Portfolio() {
 
           <div
             className="skills-inner-grid"
-            style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 18,
+              alignItems: "start",
+            }}
           >
             {SKILLS.map((s, i) => (
               <FadeEl key={i} delay={0.06 + i * 0.05}>
@@ -1461,10 +1474,10 @@ export default function Portfolio() {
                     border: `1.5px solid ${BORDER}`,
                     borderRadius: 16,
                     background: "white",
-                    height: "100%",
+                    height: "auto",
                   }}
                 >
-                  <div
+                  {/* <div
                     style={{
                       width: 40,
                       height: 40,
@@ -1478,7 +1491,7 @@ export default function Portfolio() {
                     }}
                   >
                     {s.icon}
-                  </div>
+                  </div> */}
                   <h4
                     style={{
                       fontSize: ".93rem",
@@ -1999,13 +2012,13 @@ export default function Portfolio() {
           <div style={{ display: "flex", gap: 10 }}>
             {[
               {
-                Icon: LinkedInIcon,
+                img: linkedinImg,
                 href: "https://www.linkedin.com/in/hangdaro-9386b01b5",
+                alt: "LinkedIn",
               },
-              { Icon: MailIcon, href: "mailto:darohang009988@gmail.com" },
-              { Icon: GithubIcon, href: "#" },
-              { Icon: InstagramIcon, href: "#" },
-            ].map(({ href }, i) => (
+              { img: facebookImg, href: "#", alt: "Facebook" },
+              { img: igImg, href: "#", alt: "Instagram" },
+            ].map(({ img, href, alt }, i) => (
               <a
                 key={i}
                 href={href}
@@ -2021,9 +2034,20 @@ export default function Portfolio() {
                   alignItems: "center",
                   justifyContent: "center",
                   textDecoration: "none",
+                  overflow: "hidden",
+                  padding: 6,
                 }}
               >
-                {/* <Icon /> */}
+                <img
+                  src={img}
+                  alt={alt}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                    filter: "brightness(0) invert(1)",
+                  }}
+                />
               </a>
             ))}
           </div>
